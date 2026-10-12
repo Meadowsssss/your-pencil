@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#191b22" />
+  <title>Your Pencil Desktop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="canvas" aria-label="Desktop annotation canvas"></canvas>
+  <div id="cursorHalo" aria-hidden="true"></div>
+  <div id="textEditor" contenteditable="true" spellcheck="false" aria-label="Annotation text"></div>
+  <nav class="toolbar" aria-label="Your Pencil toolbar">
+    <div class="drag-handle" title="Drag to move toolbar">⠿</div>
+    <button class="icon-button" id="foldToolbar" type="button" aria-label="Fold toolbar" title="Fold toolbar and enable click-through">&#8722;</button>
+    <div class="toolset" aria-label="Drawing tools">
+      <button class="tool active" data-tool="pen" title="Pen" aria-label="Pen"><svg viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4.2-.9L19 8.3a2.1 2.1 0 0 0-3-3L5.2 16.1 4 20Z"/><path d="m13.5 6.5 4 4"/></svg></button>
+      <button class="tool" data-tool="highlighter" title="Highlighter" aria-label="Highlighter"><svg viewBox="0 0 24 24"><path d="m14 4 6 6M4 20l4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"/><path d="M3 22h18"/></svg></button>
+      <button class="tool" data-tool="eraser" title="Eraser" aria-label="Eraser"><svg viewBox="0 0 24 24"><path d="m7 21-4-4a2 2 0 0 1 0-3l9.5-9.5a2 2 0 0 1 3 0l5 5a2 2 0 0 1 0 3L13 20H7Z"/><path d="m6 12 6 6M13 20h8"/></svg></button>
+      <button class="tool" data-tool="line" title="Line" aria-label="Line"><svg viewBox="0 0 24 24"><path d="M5 19 19 5"/><circle cx="5" cy="19" r="1"/><circle cx="19" cy="5" r="1"/></svg></button>
+      <button class="tool" data-tool="arrow" title="Arrow" aria-label="Arrow"><svg viewBox="0 0 24 24"><path d="M4 20 19 5M9 5h10v10"/></svg></button>
+      <button class="tool" data-tool="rectangle" title="Rectangle" aria-label="Rectangle"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1"/></svg></button>
+      <button class="tool" data-tool="ellipse" title="Ellipse" aria-label="Ellipse"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="6"/></svg></button>
+      <button class="tool" data-tool="text" title="Text" aria-label="Text">T</button>
+      <button class="tool" data-tool="eyedropper" title="Eyedropper - click a pixel to use its color" aria-label="Eyedropper"><svg viewBox="0 0 24 24"><path d="m14.5 6.5 3-3 3 3-3 3"/><path d="m16 8-8.5 8.5a2.1 2.1 0 0 1-3-3L13 5"/><path d="m5 16 3 3"/><path d="M3 21h5"/></svg></button>
+    </div>
+    <span class="separator"></span>
+    <div class="colors" id="quickColors" aria-label="Quick colors"></div>
+    <button class="icon-button color-trigger" id="paletteButton" title="All colors" aria-label="Open color palette">◉</button>
+    <div class="popover palette" id="palettePopover" hidden>
+      <header>Ink colors <button class="close-popover" data-close="palettePopover" aria-label="Close">×</button></header>
+      <div id="fullPalette" class="palette-grid"></div>
+      <label class="custom-color">Custom color <input id="colorPicker" type="color" value="#f4f5f8"></label>
+      <div class="quick-customizer"><select id="quickSlot" aria-label="Quick color slot"><option value="0">Quick color 1</option><option value="1">Quick color 2</option><option value="2">Quick color 3</option><option value="3">Quick color 4</option><option value="4">Quick color 5</option><option value="5">Quick color 6</option></select><button id="setQuickColor">Set selected color</button></div>
+    </div>
+    <span class="separator"></span>
+    <div class="sizes" aria-label="Brush thickness">
+      <button class="size" data-size="3" title="Thin"><i></i></button><button class="size active" data-size="6" title="Medium"><i></i></button><button class="size" data-size="11" title="Thick"><i></i></button><button class="size" data-size="18" title="Extra thick"><i></i></button>
+    </div>
+    <span class="separator"></span>
+    <div class="actions">
+      <button class="icon-button" id="passThrough" title="Let clicks reach the apps below · Ctrl+Shift+P" aria-label="Toggle click-through">↗</button>
+      <button class="icon-button" id="undo" title="Undo · Ctrl+Z" aria-label="Undo" disabled>↶</button>
+      <button class="icon-button" id="redo" title="Redo · Ctrl+Y" aria-label="Redo" disabled>↷</button>
+      <button class="icon-button" id="clear" title="Clear annotations · Ctrl+Shift+C" aria-label="Clear annotations">⌫</button>
+      <button class="icon-button" id="screenshot" title="Capture screen with annotations · Shift-click to copy" aria-label="Screenshot">▣</button>
+      <button class="icon-button" id="settingsButton" title="Settings" aria-label="Settings">⚙</button>
+      <button class="icon-button quit" id="quit" title="Quit Your Pencil" aria-label="Quit Your Pencil">×</button>
+    </div>
+    <div class="popover settings" id="settingsPopover" hidden>
+      <header>Annotation settings <button class="close-popover" data-close="settingsPopover" aria-label="Close">×</button></header>
+      <label>Fade ink <select id="fadeSelect"><option value="0">Off</option><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="60">1 minute</option><option value="300">5 minutes</option></select></label>
+      <label class="check-row"><input id="cursorHighlight" type="checkbox"> Highlight cursor</label>
+      <div class="board-buttons"><button id="whiteboard">Whiteboard</button><button id="blackboard">Blackboard</button><button id="boardOff">Desktop</button></div>
+      <div class="hotkey-area"><strong>Global tool shortcuts</strong><div id="hotkeyRows" class="hotkey-rows"></div><small>Click a shortcut, then press Ctrl + Alt and a letter, number, or F key.</small></div>
+      <p class="settings-note">Sizes are remembered separately for each tool. Your annotations and preferences save automatically on this device.</p>
+    </div>
+  </nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="../shared/tool-config.js"></script>
+  <script src="scripts/app-state.js"></script>
+  <script src="scripts/drawing.js"></script>
+  <script src="scripts/hotkeys.js"></script>
+  <script src="scripts/desktop.js"></script>
+  <script src="scripts/toolbar.js"></script>
+  <script src="scripts/bootstrap.js"></script>
+</body>
+</html>

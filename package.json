@@ -1,0 +1,42 @@
+{
+  "name": "your-pencil-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "productName": "Your Pencil",
+  "author": "Your Pencil",
+  "description": "A transparent desktop annotation and whiteboard app",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win nsis --x64",
+    "dist:arm64": "electron-builder --win nsis --arm64"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.17.0"
+  },
+  "allowScripts": {
+    "electron@44.7.0": true
+  },
+  "build": {
+    "appId": "com.yourpencil.desktop",
+    "productName": "Your Pencil",
+    "directories": { "output": "release" },
+    "files": ["src/**/*", "package.json"],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [{ "target": "nsis", "arch": ["x64", "arm64"] }],
+      "artifactName": "Your-Pencil-${version}-${arch}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

@@ -2,6 +2,10 @@
 
 Your Pencil is a Windows desktop annotation overlay for drawing over apps and presentations. It supports multiple displays and saves annotations and preferences locally.
 
+## Get a release
+
+Download the latest release of Your Pencil from [itch.io](https://medos22.itch.io/your-pen). You can also donate there to support the project.
+
 ## Requirements
 
 - Windows 10 or later

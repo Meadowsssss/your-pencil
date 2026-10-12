@@ -1,6 +1,12 @@
-# Your Pencil Desktop
+﻿# Your Pencil Desktop
 
-Your Pencil is a Windows desktop annotation overlay. It draws above other apps, supports multiple displays, and saves its annotations and preferences on the computer.
+Your Pencil is a Windows desktop annotation overlay for drawing over apps and presentations. It supports multiple displays and saves annotations and preferences locally.
+
+## Requirements
+
+- Windows 10 or later
+- Node.js 22 or newer
+- npm (included with Node.js)
 
 ## Run from source
 
@@ -53,18 +59,17 @@ Renderer scripts are loaded in order by `src/renderer/index.html`; keep shared s
 - Highlighted cursor, whiteboard, and blackboard modes.
 - Screen capture with annotations; Shift-click the screenshot button to copy the capture to the clipboard.
 - Click-through mode, a movable toolbar, and a compact folded mode that enables click-through while keeping a small unfold handle visible. Ink and cursor highlighting hide while folded and return when unfolded; folded state is remembered.
-- Annotations and settings are automatically stored in the current Windows user's Electron data folder.
+- Annotations and settings are stored locally in Electron's app data folder for the current Windows user.
 
 ## Shortcuts
 
 - **Ctrl+Shift+P**: toggle desktop click-through.
 - **Ctrl+Shift+F**: fold or unfold the toolbar; folding enables click-through and unfolding returns to drawing.
-- **Ctrl+Shift+F**: fold or unfold the toolbar; folding enables click-through and unfolding returns to drawing.
 - **Esc**: turn on click-through.
 - **Ctrl+Shift+C**: clear annotations.
 - **Ctrl+Shift+S**: capture and save the desktop with annotations.
 - **Ctrl+Shift+T**: show or hide the toolbar.
-- **Ctrl+Alt+1–9**: select pen, highlighter, eraser, line, arrow, rectangle, ellipse, text, or eyedropper by default. Change these in Settings.
+- **Ctrl+Alt+1 through Ctrl+Alt+9**: select pen, highlighter, eraser, line, arrow, rectangle, ellipse, text, or eyedropper by default. Change these in Settings.
 - **Ctrl+Shift+W**, **Ctrl+Shift+B**, **Ctrl+Shift+G**: toggle whiteboard, blackboard, or cursor highlight.
 - **P**, **H**, **E**: select pen, highlighter, or eraser while Your Pencil is receiving keyboard input.
 - **Ctrl+Z**, **Ctrl+Y**: undo, redo.
